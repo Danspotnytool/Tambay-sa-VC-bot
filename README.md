@@ -19,7 +19,7 @@ const bots = [
 <ul>
 <ul>
 <pre>
-// Return if message from the owner
+// Return if message is not from the owner
 if (msg.author.id != `${process.env.OWNER_ID}`) { return };
 </pre>
 </ul>
