@@ -43,5 +43,5 @@ if (msg.author.id != `${process.env.OWNER_ID}`) { return };
 <br>
 <h2>Note:</h2>
   <i>Selfbots are against the Discord's <a src="https://discord.com/terms">Terms of Service</a>. Using this script could make discord ban and terminate your account if found.</i>
-  <i>I wouldn't held any responsibilities for any cause.</i>
+  <i>I wouldn't hold any responsibilities for any cause.</i>
   <i><b>Use at your own risk</b></i>
