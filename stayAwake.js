@@ -11,5 +11,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(process.env.PORT || 8080, () => {
-    onsole.log(`Listening to port: ${process.env.PORT || 8080}`);
+    console.log(`Listening to port: ${process.env.PORT || 8080}`);
 });
