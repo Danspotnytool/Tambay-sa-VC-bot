@@ -3,18 +3,52 @@ require('dotenv').config();
 // Logger
 const logger = require('./logger.js');
 
-const discord = require('discord.js-selfbot');
+const Discord = require('discord.js-selfbot');
 
 const bots = [
     `${process.env.TOKEN1}`,
 ];
 
+// Create an instance of a Discord Rich Presence
+
+const timestamp = Date.now();
+
 bots.forEach((token) => {
 
-    const client = new discord.Client();
+    const updatePresence = async (client, state) => {
+        // Set the presence
+        // applicationID is 941505108603183134
+        // activityType is "PLAYING"
+        const activity = {
+            name: 'Internet Love',
+            type: 'PLAYING',
+            details: 'discord.gg/interlove',
+            state: state,
+            buttons: [
+                {
+                    label: 'Join',
+                    url: 'https://discord.gg/interlove',
+                },
+            ],
+            timestamps: {
+                start: timestamp,
+            },
+            // applicationID: '941505108603183134',
+        };
+        // await client.user.setActivity(activity);
+        client.user.setPresence({
+            pid: process.pid,
+            activity: activity,
+            status: 'online',
+        });
+    };
+
+    const client = new Discord.Client();
     client.on('ready', () => {
         console.log(logger.blue('Bot is ready!'), logger.green(`Logged in as ${client.user.tag}!`));
         // client.user.setMute(true);
+
+        updatePresence(client, 'Waiting for a command...');
     });
 
     let currentVC = null;
@@ -56,6 +90,9 @@ bots.forEach((token) => {
                     await userVC.join().then((connection) => {
                         currentVC = connection;
                         msg.channel.send(`Joined ${userVC.name}`);
+
+                        updatePresence(client, `Stalling in ${userVC.name}`);
+
                     }).catch((err) => {
                         msg.channel.send(`Error joining ${userVC.name}`);
                         console.log(err);
@@ -68,17 +105,23 @@ bots.forEach((token) => {
             await client.channels.cache.get(args[0]).join().then((connection) => {
                 currentVC = connection;
                 msg.channel.send(`Joined ${args[0]}`);
+
+                updatePresence(client, `Stalling in ${userVC.name}`);
+
             }).catch((err) => {
                 msg.channel.send(`Error joining ${args[0]}`);
                 console.log(err);
             });
         };
 
+        // Update the bot's activity
         if (content.toLowerCase().startsWith('!leavevc')) {
             if (currentVC) {
                 currentVC.disconnect();
                 currentVC = null;
                 msg.channel.send('Left voice channel');
+
+                updatePresence(client, 'Waiting for a command...');
             } else {
                 msg.channel.send('Not in a voice channel');
             };
