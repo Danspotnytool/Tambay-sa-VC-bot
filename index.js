@@ -9,7 +9,7 @@ const bots = [
     `${process.env.TOKEN1}`,
 ];
 
-// Create an instance of a Discord Rich Presence
+require('./stayAwake.js');
 
 const timestamp = Date.now();
 
