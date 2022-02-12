@@ -70,10 +70,20 @@ bots.forEach((token) => {
                     // Join the voice channel
                     await userVC.join().then((connection) => {
                         currentVC = connection;
-                        msg.channel.send(`Joined ${userVC.name}`);
+                        msg.channel.send(`Joined ${userVC.name}`)
+                            .then((message) => {
+                                setTimeout(() => {
+                                    message.delete();
+                                }, 5000);
+                            });
 
                     }).catch((err) => {
-                        msg.channel.send(`Error joining ${userVC.name}`);
+                        msg.channel.send(`Error joining ${userVC.name}`)
+                            .then((message) => {
+                                setTimeout(() => {
+                                    message.delete();
+                                }, 5000);
+                            });
                         console.log(err);
                     });
                 };
@@ -83,10 +93,20 @@ bots.forEach((token) => {
             // Join the voice channel
             await client.channels.cache.get(args[0]).join().then((connection) => {
                 currentVC = connection;
-                msg.channel.send(`Joined ${args[0]}`);
+                msg.channel.send(`Joined ${args[0]}`)
+                    .then((message) => {
+                        setTimeout(() => {
+                            message.delete();
+                        }, 5000);
+                    });
 
             }).catch((err) => {
-                msg.channel.send(`Error joining ${args[0]}`);
+                msg.channel.send(`Error joining ${args[0]}`)
+                    .then((message) => {
+                        setTimeout(() => {
+                            message.delete();
+                        }, 5000);
+                    });
                 console.log(err);
             });
         };
@@ -96,9 +116,19 @@ bots.forEach((token) => {
             if (currentVC) {
                 currentVC.disconnect();
                 currentVC = null;
-                msg.channel.send('Left voice channel');
+                msg.channel.send('Left voice channel')
+                    .then((message) => {
+                        setTimeout(() => {
+                            message.delete();
+                        }, 5000);
+                    });
             } else {
-                msg.channel.send('Not in a voice channel');
+                msg.channel.send('Not in a voice channel')
+                    .then((message) => {
+                        setTimeout(() => {
+                            message.delete();
+                        }, 5000);
+                    });
             };
         };
     });
