@@ -7,6 +7,17 @@ const Discord = require('discord.js-selfbot');
 
 const bots = [
     `${process.env.TOKEN1}`,
+    `${process.env.TOKEN2}`,
+    `${process.env.TOKEN3}`,
+    `${process.env.TOKEN4}`,
+    `${process.env.TOKEN5}`,
+    `${process.env.TOKEN6}`,
+    `${process.env.TOKEN7}`,
+    `${process.env.TOKEN8}`,
+    `${process.env.TOKEN9}`,
+    `${process.env.TOKEN10}`,
+    `${process.env.TOKEN11}`,
+    `${process.env.TOKEN12}`,
 ];
 
 require('./stayAwake.js');
@@ -15,40 +26,10 @@ const timestamp = Date.now();
 
 bots.forEach((token) => {
 
-    const updatePresence = async (client, state) => {
-        // Set the presence
-        // applicationID is 941505108603183134
-        // activityType is "PLAYING"
-        const activity = {
-            name: 'Internet Love',
-            type: 'PLAYING',
-            details: 'discord.gg/interlove',
-            state: state,
-            buttons: [
-                {
-                    label: 'Join',
-                    url: 'https://discord.gg/interlove',
-                },
-            ],
-            timestamps: {
-                start: timestamp,
-            },
-            // applicationID: '941505108603183134',
-        };
-        // await client.user.setActivity(activity);
-        client.user.setPresence({
-            pid: process.pid,
-            activity: activity,
-            status: 'online',
-        });
-    };
-
     const client = new Discord.Client();
     client.on('ready', () => {
         console.log(logger.blue('Bot is ready!'), logger.green(`Logged in as ${client.user.tag}!`));
         // client.user.setMute(true);
-
-        updatePresence(client, 'Waiting for a command...');
     });
 
     let currentVC = null;
@@ -91,8 +72,6 @@ bots.forEach((token) => {
                         currentVC = connection;
                         msg.channel.send(`Joined ${userVC.name}`);
 
-                        updatePresence(client, `Stalling in ${userVC.name}`);
-
                     }).catch((err) => {
                         msg.channel.send(`Error joining ${userVC.name}`);
                         console.log(err);
@@ -106,8 +85,6 @@ bots.forEach((token) => {
                 currentVC = connection;
                 msg.channel.send(`Joined ${args[0]}`);
 
-                updatePresence(client, `Stalling in ${userVC.name}`);
-
             }).catch((err) => {
                 msg.channel.send(`Error joining ${args[0]}`);
                 console.log(err);
@@ -120,8 +97,6 @@ bots.forEach((token) => {
                 currentVC.disconnect();
                 currentVC = null;
                 msg.channel.send('Left voice channel');
-
-                updatePresence(client, 'Waiting for a command...');
             } else {
                 msg.channel.send('Not in a voice channel');
             };
