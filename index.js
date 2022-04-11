@@ -42,6 +42,8 @@ const db = new sqlite3.Database('./database/bot.db', (err) => {
 
 bots.forEach((token) => {
 
+    let currentVC = null;
+
     const client = new Discord.Client();
     client.on('ready', () => {
         console.log(logger.blue('Bot is ready!'), logger.green(`Logged in as ${client.user.tag}!`));
@@ -62,13 +64,15 @@ bots.forEach((token) => {
             };
             // If bot is in the database, check if it has a VC ID
             if (row) {
-                console.log(row);
                 if (row.vcID == 'null') { return };
                 if (row.vcID == 'undefined') { return };
                 if (row.vcID == null) { return };
 
                 try {
-                    client.channels.cache.get(row.vcID).join();
+                    client.channels.cache.get(row.vcID).join().then((connection) => {
+                        currentVC = connection;
+                        console.log(logger.green(`Joined ${client.channels.cache.get(row.vcID).name}`));
+                    });
                 } catch(err) {
                     db.run(`UPDATE bot SET vcID = 'null' WHERE botID = '${client.user.id}'`, (err) => {
                         if (err) {
@@ -79,8 +83,6 @@ bots.forEach((token) => {
             };
         });
     });
-
-    let currentVC = null;
 
     client.on('message', async (msg) => {
         // Ignore messages from bots

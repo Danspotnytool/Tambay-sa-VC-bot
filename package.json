@@ -1,6 +1,6 @@
 {
   "name": "tambay-sa-vc-bot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Selfbot to Join and stay in a VC",
   "main": "index.js",
   "scripts": {
