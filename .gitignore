@@ -102,4 +102,4 @@ dist
 
 # TernJS port file
 .tern-port
-database/bot.db
+records.json
